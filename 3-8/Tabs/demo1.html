@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab选项卡</title>
+  <style>
+    .container {
+      max-width: 800px;
+      box-shadow: 0 0 5px 0 rgb(82, 64, 64);
+      margin: 30px auto;
+      border-radius: 4px;
+      padding: 10px;
+    }
+
+    .tabs .tab-header {
+      display: flex;
+      border-bottom: 2px solid #303030;
+    }
+
+    .tabs .tab-item {
+      margin-right: 30px;
+      cursor: pointer;
+      margin-bottom: -2px;
+    }
+
+    .tabs .tab-item.active {
+      color: rgb(97, 97, 204);
+      border-bottom: 2px solid rgb(97, 97, 204);
+    }
+
+    .tabs .tab-panel {
+      padding: 16px 0;
+      display: none;
+    }
+
+    .tabs .tab-panel.active {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Tab选项卡</h2>
+    <div class="tabs">
+      <div class="tab-header">
+        <span class="tab-item active">用户管理</span>
+        <span class="tab-item">配置管理</span>
+        <span class="tab-item">角色管理</span>
+        <span class="tab-item">定时任务补偿</span>
+      </div>
+      <div class="tab-content">
+        <div class="tab-panel active">用户管理</div>
+        <div class="tab-panel">配置管理</div>
+        <div class="tab-panel">角色管理</div>
+        <div class="tab-panel">定时任务补偿</div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const $ = s => document.querySelector(s)
+    const $$ = s => document.querySelectorAll(s)
+    let tabItems = $$('.tabs .tab-item')
+    let tabPanels = $$('.tabs .tab-panel')
+    tabItems.forEach($tab => {
+      $tab.onclick = function () {
+        tabItems.forEach($tab => { $tab.classList.remove('active') })
+        this.classList.add('active')
+        tabPanels.forEach($panel => { $panel.classList.remove('active') })
+        let index = [...tabItems].indexOf(this)
+        tabPanels[index].classList.add('active')
+      }
+    });
+  </script>
+</body>
+
+</html>
