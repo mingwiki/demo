@@ -52,7 +52,25 @@
 
 <body>
   <div class="container">
-    <h2>Tab选项卡</h2>
+    <h2>Tab选项卡1</h2>
+    <div class="tabs">
+      <div class="tab-header">
+        <span class="tab-item active">用户管理</span>
+        <span class="tab-item">配置管理</span>
+        <span class="tab-item">角色管理</span>
+        <span class="tab-item">定时任务补偿</span>
+        <span class="line"></span>
+      </div>
+      <div class="tab-content">
+        <div class="tab-panel active">用户管理</div>
+        <div class="tab-panel">配置管理</div>
+        <div class="tab-panel">角色管理</div>
+        <div class="tab-panel">定时任务补偿</div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <h2>Tab选项卡2</h2>
     <div class="tabs">
       <div class="tab-header">
         <span class="tab-item active">用户管理</span>
@@ -70,23 +88,34 @@
     </div>
   </div>
   <script>
-    const $ = s => document.querySelector(s)
-    const $$ = s => document.querySelectorAll(s)
-    let $$tabItems = $$('.tabs .tab-item')
-    let $$tabPanels = $$('.tabs .tab-panel')
-    let $line = $('.tabs .line')
-    $line.style.width = $$tabItems[0].offsetWidth + 'px'
-    $$tabItems.forEach($tab => {
-      $tab.onclick = function () {
-        $$tabItems.forEach($tab => { $tab.classList.remove('active') })
-        this.classList.add('active')
-        $$tabPanels.forEach($panel => { $panel.classList.remove('active') })
-        let index = [...$$tabItems].indexOf(this)
-        $$tabPanels[index].classList.add('active')
-        $line.style.width = this.offsetWidth + 'px'
-        $line.style.transform = `translateX(${this.offsetLeft}px)`
+    class Tabs {
+      constructor($container) {
+        this.$container = $container
+        this.$$tabItems = $container.querySelectorAll('.tabs .tab-item')
+        this.$$tabPanels = $container.querySelectorAll('.tabs .tab-panel')
+        this.$line = $container.querySelector('.tabs .line')
+        this.init()
+        this.bind()
       }
-    });
+      init() {
+        this.$line.style.width = this.$$tabItems[0].offsetWidth + 'px'
+      }
+      bind() {
+        let self = this
+        this.$$tabItems.forEach($tab => {
+          $tab.onclick = function () {
+            self.$$tabItems.forEach($tab => { $tab.classList.remove('active') })
+            this.classList.add('active')
+            self.$$tabPanels.forEach($panel => { $panel.classList.remove('active') })
+            let index = [...self.$$tabItems].indexOf(this)
+            self.$$tabPanels[index].classList.add('active')
+            self.$line.style.width = this.offsetWidth + 'px'
+            self.$line.style.transform = `translateX(${this.offsetLeft}px)`
+          }
+        });
+      }
+    }
+    document.querySelectorAll('.tabs').forEach($tab => { new Tabs($tab) })
   </script>
 </body>
 
