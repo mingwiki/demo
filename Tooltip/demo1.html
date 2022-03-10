@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tooltip文字提示组件</title>
+  <style>
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      border-radius: 5px;
+      box-shadow: 0 0 3px 0 rgb(129, 103, 103);
+      padding: 20px;
+    }
+
+    .container .btn {
+      padding: 10px 16px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #303030;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .container .btn:hover {
+      border-color: lightskyblue;
+      color: lightskyblue;
+    }
+
+    .tooltip {
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: rgb(39, 19, 59);
+      display: none;
+      white-space: nowrap;
+      z-index: 1;
+    }
+
+    .tooltip.show {
+      display: block;
+    }
+
+    .tooltip-top {
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .tooltip-top::after {
+      position: absolute;
+      content: '';
+      width: 0;
+      height: 0;
+      border: 5px solid transparent;
+      border-top-color: black;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Tooltip文字提示组件</h2>
+    <div class="btn-group">
+      <button class="btn" data-align="top" data-text="abc1">上</button>
+      <button class="btn" data-align="bottom" data-text="abc2">下</button>
+      <button class="btn" data-align="left" data-text="abc3">左</button>
+      <button class="btn" data-align="right" data-text="abc4">右</button>
+    </div>
+  </div>
+  <script>
+    class Tooltip {
+      constructor($node) {
+        this.$node = $node
+        this.$node.tooltip = this
+        this.$node.showTooltip = this.show.bind(this)
+        this.$node.hideTooltip = this.hide.bind(this)
+
+        this.init()
+        this.render()
+      }
+      init() {
+        this.$tooltip = document.createElement("div")
+        this.align = this.$node.dataset.align
+        this.text = this.$node.dataset.text
+      }
+      render() {
+        this.$tooltip.classList.add("tooltip", "tooltip-" + this.align)
+        this.$tooltip.appendChild(document.createTextNode(this.text))
+        this.$node.appendChild(this.$tooltip)
+      }
+      show() {
+        this.$tooltip.classList.add('show')
+      }
+      hide() {
+        this.$tooltip.classList.remove('show')
+      }
+    }
+    document.querySelectorAll(".btn").forEach($btn => {
+      $btn.onmouseenter = function () {
+        if (!$btn.tooltip) {
+          new Tooltip(this)
+        }
+        $btn.showTooltip()
+      }
+      $btn.onmouseleave = function () {
+        $btn.hideTooltip()
+      }
+    })
+  </script>
+</body>
+
+</html>
