@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Message消息提示组件</title>
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1591966_u346be35l6.css">
+  <style>
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      border-radius: 5px;
+      box-shadow: 0 0 3px 0 rgb(129, 103, 103);
+      padding: 20px;
+    }
+
+    .container .btn {
+      padding: 10px 16px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #303030;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .container .btn:hover {
+      border-color: lightskyblue;
+      color: lightskyblue;
+    }
+
+    .message {
+      position: fixed;
+      left: 50%;
+      top: 0;
+      transform: translate(-50%, -50px);
+      padding: 10px 16px;
+      border-radius: 4px;
+      transition: all .3s;
+      display: flex;
+      align-items: center;
+    }
+    .message .iconfont{
+      margin-right: 6px;
+    }
+
+    .message.showup {
+      transform: translate(-50%, 10px);
+    }
+
+    .message.success {
+      background-color: rgb(95, 197, 95);
+    }
+
+    .message.warning {
+      background-color: yellow;
+    }
+
+    .message.info {
+      background-color: rgb(96, 96, 202);
+    }
+
+    .message.danger {
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Message消息提示</h2>
+    <div class="btn-group">
+      <button class="btn btn-success">成功</button>
+      <button class="btn btn-warning">警告</button>
+      <button class="btn btn-info">消息</button>
+      <button class="btn btn-danger">错误</button>
+    </div>
+  </div>
+  <script>
+    class Message {
+      constructor({ type = "success", text = "" }) {
+        this.type = type
+        this.text = text
+        this.$message = document.createElement("div")
+        this.$icon = document.createElement("span")
+        this.render()
+        this.bind()
+      }
+      render() {
+        this.$message.classList.add("message", this.type)
+        this.$icon.classList.add("iconfont", "icon-" + this.type)
+        this.$message.appendChild(this.$icon)
+        this.$message.appendChild(document.createTextNode(this.text))
+        document.querySelector(".container").appendChild(this.$message)
+      }
+      bind() {
+        this.show()
+        this.hide()
+      }
+      show() {
+        setTimeout(() => {
+          this.$message.classList.add("showup")
+        }, 0)
+      }
+      hide() {
+        setTimeout(() => {
+          this.$message.classList.remove("showup")
+        }, 1000)
+        setTimeout(() => {
+          this.$message.parentNode.removeChild(this.$message)
+        }, 2000)
+      }
+    }
+
+    document.querySelector(".btn-success").onclick = function () {
+      new Message({ type: "success", text: "我是success提示" })
+    }
+    document.querySelector(".btn-warning").onclick = function () {
+      new Message({ type: "warning", text: "我是warning提示" })
+    }
+    document.querySelector(".btn-info").onclick = function () {
+      new Message({ type: "info", text: "我是info提示" })
+    }
+    document.querySelector(".btn-danger").onclick = function () {
+      new Message({ type: "danger", text: "我是danger提示" })
+    }
+  </script>
+</body>
+
+</html>
