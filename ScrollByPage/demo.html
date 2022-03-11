@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>按页滚动</title>
+  <style>
+    .scrollByPage {
+      position: fixed;
+      right: 20px;
+      bottom: 30px;
+      border: 2px solid green;
+      background-color: yellow;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    .onePage {
+      height: 100vh;
+      width: 100%;
+      font-size: 50px;
+    }
+
+    .onePage:nth-child(odd) {
+      background-color: blue;
+    }
+
+    .onePage:nth-child(even) {
+      background-color: red;
+    }
+
+    .backToTop {
+      position: fixed;
+      right: 200px;
+      bottom: 30px;
+      border: 2px solid green;
+      background-color: yellow;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="onePage">hello 1 world</div>
+  <div class="onePage">hello 2 world</div>
+  <div class="onePage">hello 3 world</div>
+  <div class="onePage">hello 4 world</div>
+  <div class="onePage">hello 5 world</div>
+  <div class="onePage">hello 6 world</div>
+  <div class="onePage">hello 7 world</div>
+  <div class="onePage">hello 8 world</div>
+  <div class="onePage">hello 9 world</div>
+  <div class="onePage">hello 10 world</div>
+  <div class="scrollByPage">scrollByPage</div>
+  <div class="backToTop">Back to Top</div>
+</body>
+<script>
+  $scrollByPage = document.querySelector(".scrollByPage")
+  $scrollByPage.addEventListener("click", function () {
+    window.scrollBy({
+      top: document.documentElement.clientHeight,
+      behavior: "smooth"
+    })
+  })
+  $backToTop = document.querySelector(".backToTop")
+  $backToTop.addEventListener("click", function () {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
+  })
+</script>
+
+</html>
