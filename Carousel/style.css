@@ -8,6 +8,7 @@
 
 .carousel {
   position: relative;
+  overflow: hidden;
 }
 
 .carousel .panels {
