@@ -1,0 +1,22 @@
+<script>
+  let url = 'http://rap2api.taobao.org/app/mock/244238/weather?city=杭州'
+  let xhr = new XMLHttpRequest() //0
+  xhr.open('GET', url, true) //1
+
+  console.log(xhr)
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === xhr.DONE) {
+      if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+        console.log(JSON.parse(xhr.responseText))
+      } else {
+        console.log('服务器异常')
+      }
+    }
+  }
+
+  xhr.send() //2
+  xhr.onerror = function () { // 可选
+    console.log('服务器异常')
+  }
+
+</script>
